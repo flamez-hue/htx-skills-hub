@@ -49,13 +49,9 @@ Spot trading on HTX using authenticated API endpoints. Requires API key and secr
 | `/v2/account/asset-valuation` | Returns detailed asset valuation and portfolio composition | None | None | Yes |
 | `/v1/account/transfer` | Transfers assets between accounts | from-account, to-account, currency, amount | None | Yes |
 | `/v1/account/history` | Returns account history and transaction records | None | account-id, currency, type | Yes |
-| `/v1/account/ledger` | Returns detailed ledger entries for account transactions | account-id | currency, type, from-id, size | Yes |
 | `/v1/futures/transfer` | Transfers funds between spot trading account and futures contract account | currency, amount, type | None | Yes |
 | `/v1/point/account` | Returns current HTX points balance and history | None | None | Yes |
 | `/v1/point/transfer` | Transfers HTX points between accounts | from-user, to-user, amount | None | Yes |
-| `/v1/account/deduct-info` | Returns user deduction settings and information | None | None | Yes |
-| `/v1/account/deduct-currencies` | Returns list of currencies available for fee deduction | None | None | Yes |
-| `/v1/account/deduct-config` | Configures fee deduction method for spot and margin accounts | deductCurrency | None | Yes |
 
 ### Trading Endpoints
 
@@ -69,15 +65,6 @@ Spot trading on HTX using authenticated API endpoints. Requires API key and secr
 | `/v1/order/orders/getClientOrder` | Returns order details using client-order-id | client-order-id | None | Yes |
 | `/v1/order/matchresults` | Returns trade history and fill details | None | symbol, types, start-time, end-time, from, direct, size | Yes |
 
-### Conditional Order Endpoints
-
-| Endpoint | Description | Required | Optional | Authentication |
-|----------|-------------|----------|----------|----------------|
-| `/v1/stop-order/orders/place` | Places a conditional order that executes when trigger conditions are met | account-id, symbol, order-price, order-size, trigger-price, operator | order-type, trailing-rate, client-order-id | Yes |
-| `/v1/stop-order/orders/{order-id}/cancel` | Cancels a conditional order before it is triggered | order-id | None | Yes |
-| `/v1/stop-order/openOrders` | Returns list of open conditional orders not yet triggered | account-id | symbol, side, size | Yes |
-| `/v1/stop-order/orders` | Returns history of conditional orders | account-id | symbol, side, states, from, size | Yes |
-| `/v1/stop-order/orders/{order-id}` | Returns details of a specific conditional order | order-id | None | Yes |
 
 ### Margin Loan (Cross/Isolated) Endpoints
 
