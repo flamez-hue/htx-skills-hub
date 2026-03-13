@@ -17,62 +17,62 @@ Spot trading on HTX using authenticated API endpoints. Requires API key and secr
 
 | Endpoint | Description | Required | Optional | Authentication |
 |----------|-------------|----------|----------|----------------|
-| `/v2/market-status` | Returns current market status with enum values including: 1=normal, 2=halted, 3=cancel-only | None | None | No |
-| `/v2/settings/common/symbols` | Returns all supported trading symbols with detailed configuration including state, precision, and trading status | None | ts | No |
-| `/v2/settings/common/currencies` | Returns all supported currencies with their configuration and display names | None | ts | No |
-| `/v1/settings/common/symbols` | Returns symbol settings with pricing and trading precision information | None | None | No |
-| `/v1/settings/common/market-symbols` | Returns market symbol configuration for spot trading | None | None | No |
-| `/v2/reference/currencies` | Returns currency and blockchain chain reference data | None | None | No |
-| `/v1/common/timestamp` | Returns current server timestamp in milliseconds | None | None | No |
+| GET `/v2/market-status` | Returns current market status with enum values including: 1=normal, 2=halted, 3=cancel-only | None | None | No |
+| GET `/v2/settings/common/symbols` | Returns all supported trading symbols with detailed configuration including state, precision, and trading status | None | ts | No |
+| GET `/v2/settings/common/currencies` | Returns all supported currencies with their configuration and display names | None | ts | No |
+| GET `/v1/settings/common/symbols` | Returns symbol settings with pricing and trading precision information | None | None | No |
+| GET `/v1/settings/common/market-symbols` | Returns market symbol configuration for spot trading | None | None | No |
+| GET `/v2/reference/currencies` | Returns currency and blockchain chain reference data | None | None | No |
+| GET `/v1/common/timestamp` | Returns current server timestamp in milliseconds | None | None | No |
 
 ### Market Data Endpoints
 
 | Endpoint | Description | Required | Optional | Authentication |
 |----------|-------------|----------|----------|----------------|
-| `/market/history/klines` | Returns OHLC candlestick data for the specified symbol and time period | symbol, period | size, from | No |
-| `/market/detail` | Returns the latest market ticker data for a symbol including price, volume, and 24h stats | symbol | None | No |
-| `/market/tickers` | Returns latest ticker data for all trading pairs | None | None | No |
-| `/market/depth` | Returns order book depth (bids and asks) for a symbol | symbol, type | None | No |
-| `/market/trade` | Returns the latest trade data for a symbol | symbol | None | No |
-| `/market/history/trade` | Returns recent trades for a symbol | symbol | size | No |
-| `/market/overview` | Returns 24-hour market summary statistics for all symbols | None | None | No |
-| `/market/orderbook` | Returns complete order book for a symbol with full depth | symbol | depth | No |
+| GET `/market/history/klines` | Returns OHLC candlestick data for the specified symbol and time period | symbol, period | size, from | No |
+| GET `/market/detail` | Returns the latest market ticker data for a symbol including price, volume, and 24h stats | symbol | None | No |
+| GET `/market/tickers` | Returns latest ticker data for all trading pairs | None | None | No |
+| GET `/market/depth` | Returns order book depth (bids and asks) for a symbol | symbol, type | None | No |
+| GET `/market/trade` | Returns the latest trade data for a symbol | symbol | None | No |
+| GET `/market/history/trade` | Returns recent trades for a symbol | symbol | size | No |
+| GET `/market/overview` | Returns 24-hour market summary statistics for all symbols | None | None | No |
+| GET `/market/orderbook` | Returns complete order book for a symbol with full depth | symbol | depth | No |
 
 ### Account Endpoints
 
 | Endpoint | Description | Required | Optional | Authentication |
 |----------|-------------|----------|----------|----------------|
-| `/v1/account/accounts` | Returns all account details for the authenticated user | None | None | Yes |
-| `/v1/account/accounts/{account-id}/balance` | Returns balance details for a specific account including assets and liabilities | account-id | None | Yes |
-| `/v2/account/valuation` | Returns total asset valuation for all accounts in the user's portfolio | None | valuationCurrency | Yes |
-| `/v2/account/asset-valuation` | Returns detailed asset valuation and portfolio composition | None | None | Yes |
-| `/v1/account/transfer` | Transfers assets between accounts | from-account, to-account, currency, amount | None | Yes |
-| `/v1/account/history` | Returns account history and transaction records | None | account-id, currency, type | Yes |
-| `/v1/futures/transfer` | Transfers funds between spot trading account and futures contract account | currency, amount, type | None | Yes |
-| `/v1/point/account` | Returns current HTX points balance and history | None | None | Yes |
-| `/v1/point/transfer` | Transfers HTX points between accounts | from-user, to-user, amount | None | Yes |
+| GET `/v1/account/accounts` | Returns all account details for the authenticated user | None | None | Yes |
+| GET `/v1/account/accounts/{account-id}/balance` | Returns balance details for a specific account including assets and liabilities | account-id | None | Yes |
+| GET `/v2/account/valuation` | Returns total asset valuation for all accounts in the user's portfolio | None | valuationCurrency | Yes |
+| GET `/v2/account/asset-valuation` | Returns detailed asset valuation and portfolio composition | None | None | Yes |
+| POST `/v1/account/transfer` | Transfers assets between accounts | from-account, to-account, currency, amount | None | Yes |
+| GET `/v1/account/history` | Returns account history and transaction records | None | account-id, currency, type | Yes |
+| POST `/v1/futures/transfer` | Transfers funds between spot trading account and futures contract account | currency, amount, type | None | Yes |
+| GET `/v1/point/account` | Returns current HTX points balance and history | None | None | Yes |
+| POST `/v1/point/transfer` | Transfers HTX points between accounts | from-user, to-user, amount | None | Yes |
 
 ### Trading Endpoints
 
 | Endpoint | Description | Required | Optional | Authentication |
 |----------|-------------|----------|----------|----------------|
-| `/v1/order/orders/place` | Places a new spot trading order (limit or market) | account-id, amount, symbol, type | price, client-order-id, source, time-in-force | Yes |
-| `/v1/order/orders/{order-id}/cancel` | Cancels a pending order | order-id | None | Yes |
-| `/v1/order/orders/batchcancel` | Cancels multiple orders matching specified criteria | None | account-id, symbol | Yes |
-| `/v1/order/orders/{order-id}` | Returns details of a specific order | order-id | None | Yes |
-| `/v1/order/orders` | Returns orders matching specified criteria (open, closed, cancelled) | account-id | symbol, states, types, start-time, end-time, from, direct, size | Yes |
-| `/v1/order/orders/getClientOrder` | Returns order details using client-order-id | client-order-id | None | Yes |
-| `/v1/order/matchresults` | Returns trade history and fill details | None | symbol, types, start-time, end-time, from, direct, size | Yes |
+| POST `/v1/order/orders/place` | Places a new spot trading order (limit or market) | account-id, amount, symbol, type | price, client-order-id, source, time-in-force | Yes |
+| POST `/v1/order/orders/{order-id}/cancel` | Cancels a pending order | order-id | None | Yes |
+| POST `/v1/order/orders/batchcancel` | Cancels multiple orders matching specified criteria | None | account-id, symbol | Yes |
+| GET `/v1/order/orders/{order-id}` | Returns details of a specific order | order-id | None | Yes |
+| GET `/v1/order/orders` | Returns orders matching specified criteria (open, closed, cancelled) | account-id | symbol, states, types, start-time, end-time, from, direct, size | Yes |
+| GET `/v1/order/orders/getClientOrder` | Returns order details using client-order-id | client-order-id | None | Yes |
+| GET `/v1/order/matchresults` | Returns trade history and fill details | None | symbol, types, start-time, end-time, from, direct, size | Yes |
 
 
 ### Margin Loan (Cross/Isolated) Endpoints
 
 | Endpoint | Description | Required | Optional | Authentication |
 |----------|-------------|----------|----------|----------------|
-| `/v1/margin/orders` | Applies for a margin loan on cross or isolated margin account | currency, amount | account-id | Yes |
-| `/v1/margin/orders/{order-id}/repay` | Repays a margin loan with interest | order-id, amount | None | Yes |
-| `/v1/margin/orders` | Returns margin loan orders and their status | None | currency, state, from, size | Yes |
-| `/v1/margin/accounts/balance` | Returns detailed balance information for margin accounts | None | account-id | Yes |
+| POST `/v1/margin/orders` | Applies for a margin loan on cross or isolated margin account | currency, amount | account-id | Yes |
+| POST `/v1/margin/orders/{order-id}/repay` | Repays a margin loan with interest | order-id, amount | None | Yes |
+| GET `/v1/margin/orders` | Returns margin loan orders and their status | None | currency, state, from, size | Yes |
+| GET `/v1/margin/accounts/balance` | Returns detailed balance information for margin accounts | None | account-id | Yes |
 
 ---
 
