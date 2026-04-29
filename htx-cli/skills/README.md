@@ -25,12 +25,11 @@ The split follows `HTX_Skill_Split_Plan.docx`:
 ## Prerequisites
 
 - A built `htx-cli` binary on `PATH`. The Go implementation lives in
-  [`../agent-harness-go`](../agent-harness-go). Build and install it with the
-  scripts at the repo root:
+  [`../agent-harness-go`](../agent-harness-go). Install it via the GitHub
+  release installer at the repo root:
 
   ```bash
-  ./build.sh            # cross-compiles for macOS/Linux/Windows into dist/
-  ./install-local.sh    # installs the current-platform binary to ~/.local/bin
+  ./install.sh          # installs the current-platform binary to ~/.local/bin
   ```
 
   Or point at a specific binary via `HTX_CLI_BIN=/abs/path/to/htx-cli`.

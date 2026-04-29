@@ -5,20 +5,17 @@ set -e
 # htx-cli + skills unified installer
 #
 # Runs two independent installers in sequence:
-#   1. ./install.sh         — the htx-cli binary (GitHub release)
-#      or ./install-local.sh if a local dist/ is available / requested.
-#   2. ./skills/install-all.sh — all 6 Claude Code skills.
+#   1. ./install.sh             — the htx-cli binary (GitHub release).
+#   2. ./skills/install-all.sh  — all 6 Claude Code skills.
 #
 # Usage:
 #   ./install-all.sh                        # binary (remote) + all skills (local)
-#   ./install-all.sh --local                # binary (local dist/) + skills
 #   ./install-all.sh --beta                 # binary: latest pre-release
 #   ./install-all.sh --skills-only          # skip binary, install skills only
 #   ./install-all.sh --binary-only          # install binary only, skip skills
 #   ./install-all.sh --uninstall            # remove skills (binary left in place)
 #   ./install-all.sh --only spot-market,spot-account
 #   ./install-all.sh --force                # force skills overwrite
-#   ./install-all.sh --dist ./dist          # binary from custom local dist
 #   ./install-all.sh --registry             # skills from npm registry
 #
 # Flags are forwarded to the delegated scripts where applicable.
@@ -26,35 +23,26 @@ set -e
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 BIN_REMOTE_SCRIPT="$SCRIPT_DIR/install.sh"
-BIN_LOCAL_SCRIPT="$SCRIPT_DIR/install-local.sh"
 SKILLS_SCRIPT="$SCRIPT_DIR/skills/install-all.sh"
 
-USE_LOCAL=false
 BETA_MODE=false
 SKIP_BINARY=false
 SKIP_SKILLS=false
 UNINSTALL=false
 FORCE=false
 USE_REGISTRY=false
-DIST_DIR=""
 ONLY=""
 DEST=""
 
 # ── Parse arguments ──────────────────────────────────────────
 while [ $# -gt 0 ]; do
   case "$1" in
-    --local)          USE_LOCAL=true; shift ;;
     --beta)           BETA_MODE=true; shift ;;
     --skills-only)    SKIP_BINARY=true; shift ;;
     --binary-only)    SKIP_SKILLS=true; shift ;;
     --uninstall|-u)   UNINSTALL=true; shift ;;
     --force|-f)       FORCE=true; shift ;;
     --registry|-r)    USE_REGISTRY=true; shift ;;
-    --dist)
-      [ $# -lt 2 ] && { echo "Error: --dist requires a path" >&2; exit 1; }
-      DIST_DIR="$2"; USE_LOCAL=true; shift 2
-      ;;
-    --dist=*)         DIST_DIR="${1#--dist=}"; USE_LOCAL=true; shift ;;
     --only)
       [ $# -lt 2 ] && { echo "Error: --only requires a list" >&2; exit 1; }
       ONLY="$2"; shift 2
@@ -66,7 +54,7 @@ while [ $# -gt 0 ]; do
       ;;
     --dest=*)         DEST="${1#--dest=}"; shift ;;
     -h|--help)
-      sed -n '3,25p' "$0" | sed 's/^# \{0,1\}//'
+      sed -n '3,22p' "$0" | sed 's/^# \{0,1\}//'
       exit 0
       ;;
     *)
@@ -89,7 +77,6 @@ if [ "$UNINSTALL" = true ]; then
   "$SKILLS_SCRIPT" $extra
   echo ""
   echo "Note: the htx-cli binary was NOT removed."
-  echo "To remove it, run: ./install-local.sh --uninstall"
   exit 0
 fi
 
@@ -97,22 +84,11 @@ fi
 if [ "$SKIP_BINARY" = false ]; then
   echo "==> [1/2] Installing htx-cli binary"
 
-  # If a local dist exists and --local not explicitly set, still prefer remote
-  # unless caller asked for --local.
-  if [ "$USE_LOCAL" = true ]; then
-    [ -x "$BIN_LOCAL_SCRIPT" ] || { echo "Error: $BIN_LOCAL_SCRIPT not found or not executable" >&2; exit 1; }
-    bin_extra=""
-    [ -n "$DIST_DIR" ]  && bin_extra="$bin_extra $DIST_DIR"
-    [ "$FORCE" = true ] && bin_extra="$bin_extra --force"
-    # shellcheck disable=SC2086
-    "$BIN_LOCAL_SCRIPT" $bin_extra
-  else
-    [ -x "$BIN_REMOTE_SCRIPT" ] || { echo "Error: $BIN_REMOTE_SCRIPT not found or not executable" >&2; exit 1; }
-    bin_extra=""
-    [ "$BETA_MODE" = true ] && bin_extra="$bin_extra --beta"
-    # shellcheck disable=SC2086
-    "$BIN_REMOTE_SCRIPT" $bin_extra
-  fi
+  [ -x "$BIN_REMOTE_SCRIPT" ] || { echo "Error: $BIN_REMOTE_SCRIPT not found or not executable" >&2; exit 1; }
+  bin_extra=""
+  [ "$BETA_MODE" = true ] && bin_extra="$bin_extra --beta"
+  # shellcheck disable=SC2086
+  "$BIN_REMOTE_SCRIPT" $bin_extra
   echo ""
 else
   echo "==> [1/2] Skipping binary install (--skills-only)"
