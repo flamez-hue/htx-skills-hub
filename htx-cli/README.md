@@ -4,6 +4,9 @@ A Go-based command-line harness for the HTX (formerly Huobi) REST API, shipped
 alongside a set of six Claude Code / Claude Agent skills that wrap it with
 least-privilege API scopes.
 
+- GitHub: https://github.com/flamez-hue/htx-skills-hub
+- Latest release: https://github.com/flamez-hue/htx-skills-hub/releases/tag/v1.0.0
+
 ## What's in this repo
 
 | Path | Purpose |
@@ -56,7 +59,7 @@ prints a warning.
 ### Install only the binary
 
 ```bash
-# From a GitHub release (stable):
+# From a GitHub release (stable — https://github.com/flamez-hue/htx-skills-hub/releases/tag/v1.0.0):
 ./install.sh
 
 # Latest pre-release:

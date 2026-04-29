@@ -17,10 +17,13 @@
     of downloading.
 
 .EXAMPLE
-    irm https://raw.githubusercontent.com/your-org/htx-cli/main/install.ps1 | iex
+    irm https://raw.githubusercontent.com/flamez-hue/htx-skills-hub/main/htx-cli/install.ps1 | iex
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File .\install.ps1 -LocalDist .\dist
+
+.LINK
+    https://github.com/flamez-hue/htx-skills-hub/releases/tag/v1.0.0
 #>
 
 param(
@@ -30,7 +33,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$Repo       = if ($env:HTX_REPO) { $env:HTX_REPO } else { 'your-org/htx-cli' }
+$Repo       = if ($env:HTX_REPO) { $env:HTX_REPO } else { 'flamez-hue/htx-skills-hub' }
 $Binary     = 'htx-cli'
 $InstallDir = Join-Path $env:LOCALAPPDATA "Programs\htx-cli"
 $ExePath    = Join-Path $InstallDir "$Binary.exe"
