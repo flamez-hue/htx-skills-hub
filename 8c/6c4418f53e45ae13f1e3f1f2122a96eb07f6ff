@@ -1,0 +1,29 @@
+scripts/install.sh
+  s_2e5732a504cc44::t_b21b6168e6764b 2-5,9-15,21-23,34,40,46-55,57,61,64-71,74,78-95,108-109,111,124
+  s_2e5732a504cc44::t_b15cb540a4c219 75
+  s_2e5732a504cc44::t_f238c50de01465 97-105
+  s_2e5732a504cc44::t_002e583d9befe5 96
+.github/workflows/release.yml
+  s_2e5732a504cc44::t_27ae76e230650e 1-97
+scripts/build.js
+  s_2e5732a504cc44::t_22dce36b317e74 7
+  s_2e5732a504cc44::t_82e091e3d15188 76-89
+README.md
+  s_2e5732a504cc44::t_68821998625edc 52-64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "8c6c4418f53e45ae13f1e3f1f2122a96eb07f6ff",
+  "prompts": {},
+  "sessions": {
+    "s_2e5732a504cc44": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "925962c7-7491-432d-bd11-5668d8131aba",
+        "model": "claude-sonnet-5-5"
+      },
+      "human_author": "flame.zhang <flame.z@htx-inc.com>"
+    }
+  }
+}
